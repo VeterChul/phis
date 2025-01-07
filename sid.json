@@ -1,0 +1,23 @@
+{
+    "job_name" : "test",
+    "random" : true,
+    "list" : [{
+        "name" : "Straight_line_uniform_movement",
+        "looking" : "l",
+        "values" : {
+            "v" : [1, 100],
+            "t" : [0, 100],
+            "l" : [0, 100]
+        },
+        "quantity" : 1
+    },{
+        "name" : "Average_speed",
+        "looking" : "c",
+        "quantity" : 1
+    },{
+        "name" : "Adding_speeds",
+        "looking" : "v",
+        "quantity" : 1
+    }
+    ]
+}

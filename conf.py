@@ -1,0 +1,1 @@
+prog_dir = "/home/veter/прога/projekt/phis/"
