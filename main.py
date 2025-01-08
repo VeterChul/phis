@@ -5,6 +5,8 @@ import shutil
 from conf import prog_dir
 from random import *
 from sklearn.utils import shuffle
+import docx 
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 
 def print_task(js):
     n = len(js["tasks_ans"])
@@ -65,13 +67,6 @@ if "list_of_tasks.json" in list_dir:
 else:
     print("Не обнаружен файл list_of_tasks. Проверьте файлы")
     exit()
-if "list_of_tasks.json" in list_dir:
-    f  = open(f"{prog_dir}list_of_tasks.json", "r")
-    list_of_tasks  = json.load(f)
-    f.close()
-else:
-    print("Не обнаруружен файл list_of_tasks")
-    exit()
 
 if "list_of_tasks_user.json" in list_dir:
     f  = open(f"{prog_dir}list_of_tasks_user.json", "r")
@@ -129,7 +124,7 @@ if "random" in sid:
 
 print_task(list_ret)
 
-#запись
+#запись json
 
 name = name_job(prog_dir, sid)
 
@@ -137,3 +132,24 @@ os.mkdir(f"{prog_dir}{name}")
 f = open(f"{prog_dir}{name}/job.json", "a")
 f.write(str(list_ret).replace("'", '"'))
 f.close()
+
+#запись docx
+
+
+n = len(list_ret["tasks_ans"])
+m = len(list_ret["tasks_ans"][0])
+for i in range(n):
+    doc = docx.Document()
+    title = doc.add_heading(f'Работа: {name}. Вариант N{i+1}.', level=0)
+    title.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    for j in range(m):
+        doc.add_paragraph(f"Задача N{j + 1}\n{list_ret["tasks_ans"][i][j]["text"]}")
+    doc.save(f'{prog_dir}{name}/Работа: {name}. Вариант N{i+1}..docx')
+
+for i in range(n):
+    doc = docx.Document()
+    title = doc.add_heading(f'Работа: {name}. Вариант N{i+1}. Ответы.', level=0)
+    title.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    for j in range(m):
+        doc.add_paragraph(f"Задача N{j + 1}\n{list_ret["tasks_ans"][i][j]["ans"]}")
+    doc.save(f'{prog_dir}{name}/Работа: {name}. Вариант N{i+1}. Ответы..docx')
