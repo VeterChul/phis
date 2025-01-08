@@ -135,7 +135,6 @@ f.close()
 
 #запись docx
 
-
 n = len(list_ret["tasks_ans"])
 m = len(list_ret["tasks_ans"][0])
 for i in range(n):
