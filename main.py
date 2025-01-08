@@ -24,13 +24,31 @@ def name_job(prog_dir, js):
 
 # считывание сида и листа задач
 
-f  = open(f"{prog_dir}sid.json", "r")
-sid  = json.load(f)
-f.close()
+list_dir = os.listdir(prog_dir)
 
-f  = open(f"{prog_dir}list_of_tasks.json", "r")
-list_of_tasks  = json.load(f)
-f.close()
+if "sid.json" in list_dir:
+    f  = open(f"{prog_dir}sid.json", "r")
+    sid  = json.load(f)
+    f.close()
+else:
+    print("Не обнаруружен файл sid")
+    exit()
+
+if "list_of_tasks.json" in list_dir:
+    f  = open(f"{prog_dir}list_of_tasks.json", "r")
+    list_of_tasks  = json.load(f)
+    f.close()
+else:
+    print("Не обнаруружен файл list_of_tasks")
+    exit()
+
+if "list_of_tasks_user.json" in list_dir:
+    f  = open(f"{prog_dir}list_of_tasks_user.json", "r")
+    list_of_tasks_user  = json.load(f)
+    f.close()
+else:
+    list_of_tasks_user = {}
+
 
 #генерация 
 
@@ -47,11 +65,19 @@ else:
 for k in range(n):
     m = []
     for i in sid["list"]:
-        task = list_of_tasks[i["name"]]
+        if i["name"] in list_of_tasks:
+            task = list_of_tasks[i["name"]]
+        elif i["name"] in list_of_tasks_user:
+            task = list_of_tasks_user[i["name"]]
+        else:
+            print(f"Указано неправильное имя задачи {i["name"]}")
+            exit()
+        
         if "quantity" in i:
             r = int(i["quantity"])
         else:
             r = 1
+
         for j in range(r):
             exec(task["kod"])
             if "values" in i:
