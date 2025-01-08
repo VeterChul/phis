@@ -6,6 +6,21 @@ from conf import prog_dir
 from random import *
 from sklearn.utils import shuffle
 
+def print_task(js):
+    n = len(js["tasks_ans"])
+    m = len(js["tasks_ans"][0])
+    print("Работа:")
+    for i in range(n):
+        print(f"Вариант N{i+1}")
+        for j in range(m):
+            print(f"    Задача N{j + 1}\n    {js["tasks_ans"][i][j]["text"]}")
+    print("Ответы:")
+    for i in range(n):
+        print(f"Вариант N{i+1}")
+        for j in range(m):
+            print(f"    Задача N{j + 1}\n    {js["tasks_ans"][i][j]["ans"]}")
+    
+
 def name_job(prog_dir, js):
     if "job_name" in js:
         if js["job_name"] in os.listdir(prog_dir):
@@ -24,13 +39,23 @@ def name_job(prog_dir, js):
 
 # считывание сида и листа задач
 
-f  = open(f"{prog_dir}sid.json", "r")
-sid  = json.load(f)
-f.close()
+list_dir = os.listdir(prog_dir)
 
-f  = open(f"{prog_dir}list_of_tasks.json", "r")
-list_of_tasks  = json.load(f)
-f.close()
+if "sid.json" in list_dir:
+    f  = open(f"{prog_dir}sid.json", "r")
+    sid  = json.load(f)
+    f.close()
+else:
+    print("Не обнаружен файл sid. Проверьте файлы")
+    exit()
+
+if "list_of_tasks.json" in list_dir:
+    f  = open(f"{prog_dir}list_of_tasks.json", "r")
+    list_of_tasks  = json.load(f)
+    f.close()
+else:
+    print("Не обнаружен файл list_of_tasks. Проверьте файлы")
+    exit()
 
 #генерация 
 
@@ -70,7 +95,7 @@ if "random" in sid:
     if sid["random"]:
         list_ret["tasks_ans"] =  shuffle(list_ret["tasks_ans"])
 
-print(list_ret)
+print_task(list_ret)
 
 #запись
 
