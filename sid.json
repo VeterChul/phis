@@ -1,6 +1,7 @@
 {
     "job_name" : "test",
     "random" : true,
+    "quantity" : 2,
     "list" : [{
         "name" : "Straight_line_uniform_movement",
         "looking" : "l",

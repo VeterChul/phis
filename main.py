@@ -38,24 +38,33 @@ list_ret = {
     "tasks_ans":[]
 }
 
-for i in sid["list"]:
-    task = list_of_tasks[i["name"]]
-    if "quantity" in i:
-        r = int(i["quantity"])
-    else:
-        r = 1
-    for j in range(r):
-        exec(task["kod"])
-        if "values" in i:
-            values = i["values"]
+if "quantity" in sid:
+    n = sid["quantity"]
+else:
+    n = 1
+
+
+for k in range(n):
+    m = []
+    for i in sid["list"]:
+        task = list_of_tasks[i["name"]]
+        if "quantity" in i:
+            r = int(i["quantity"])
         else:
-            values = task["standard_values"]
-        s = f"an = {i["name"]}('{i["looking"]}',{values}, {task})"
-        exec(s)
-        list_ret["tasks_ans"].append({
-            "text" : an[0],
-            "ans" : an[1]
-        })
+            r = 1
+        for j in range(r):
+            exec(task["kod"])
+            if "values" in i:
+                values = i["values"]
+            else:
+                values = task["standard_values"]
+            s = f"an = {i["name"]}('{i["looking"]}',{values}, {task})"
+            exec(s)
+            m.append({
+                "text" : an[0],
+                "ans" : an[1]
+            })
+    list_ret["tasks_ans"].append(m)
 
 if "random" in sid:
     if sid["random"]:
