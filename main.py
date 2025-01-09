@@ -142,7 +142,10 @@ for i in range(n):
     title = doc.add_heading(f'Работа: {name}. Вариант N{i+1}.', level=0)
     title.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
     for j in range(m):
-        doc.add_paragraph(f"Задача N{j + 1}\n{list_ret["tasks_ans"][i][j]["text"]}")
+        para = doc.add_paragraph()
+        bold_para = para.add_run(f"Задача N{j + 1}")
+        bold_para.bold = True
+        doc.add_paragraph(f"{list_ret["tasks_ans"][i][j]["text"]}")
     doc.save(f'{prog_dir}{name}/Работа: {name}. Вариант N{i+1}..docx')
 
 for i in range(n):
@@ -150,5 +153,8 @@ for i in range(n):
     title = doc.add_heading(f'Работа: {name}. Вариант N{i+1}. Ответы.', level=0)
     title.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
     for j in range(m):
-        doc.add_paragraph(f"Задача N{j + 1}\n{list_ret["tasks_ans"][i][j]["ans"]}")
+        para = doc.add_paragraph()
+        bold_para = para.add_run(f"Задача N{j + 1}")
+        bold_para.bold = True
+        doc.add_paragraph(f"{list_ret["tasks_ans"][i][j]["ans"]}")
     doc.save(f'{prog_dir}{name}/Работа: {name}. Вариант N{i+1}. Ответы..docx')
